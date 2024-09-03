@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const config = require('../../../config');
-const validator = require('validator');
 
 const { Schema, model } = mongoose;
 
-const UserSchema = new Schema(
+const AdminSchema = new Schema(
   {
     name: {
       type: String,
@@ -19,63 +18,44 @@ const UserSchema = new Schema(
     },
     email: {
       type: String,
-      required: [true, 'Email is required'],
+      required: true,
       unique: true,
-      validate: {
-        validator: (value) => validator.isEmail(value),
-        message: 'Please provide a valid email address',
-      },
     },
     phone_number: {
       type: String,
-      // required: true,
+      unique: true,
+      sparse: true,
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
-      select: false,
+      required: true,
+      select: 0,
     },
     address: {
       type: String,
     },
-    role: {
+    gender: {
       type: String,
-      enum: ['USER'],
-      default: 'USER',
-    },
-    age: {
-      type: String,
-    },
-    profile_image: {
-      type: String,
-      default: 'https://res.cloudinary.com/arafatleo/image/upload/v1720600946/images_1_dz5srb.png',
-    },
-    location: {
-      type: String,
+      enum: ['male', 'female', 'others'],
     },
     date_of_birth: {
       type: Date,
     },
-    verifyCode: {
+    profile_image: {
       type: String,
+      default:
+        'https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg',
     },
-    activationCode: {
+    verifyCode: {
       type: String,
     },
     verifyExpire: {
       type: Date,
     },
-    expirationTime: {
-      type: Date,
-      default: () => Date.now() + 2 * 60 * 1000,
-    },
-    is_block: {
-      type: Boolean,
-      default: false,
-    },
-    isActive: {
-      type: Boolean,
-      default: false,
+    role: {
+      type: String,
+      enum: ['ADMIN', 'SUPER_ADMIN'],
+      default: 'ADMIN',
     },
   },
   {
@@ -86,8 +66,7 @@ const UserSchema = new Schema(
   }
 );
 
-// Check if User exists
-UserSchema.statics.isUserExist = async function (email) {
+AdminSchema.statics.isAdminExist = async function (email) {
   return await this.findOne(
     { email },
     {
@@ -101,12 +80,12 @@ UserSchema.statics.isUserExist = async function (email) {
 };
 
 // Check password match
-UserSchema.statics.isPasswordMatched = async function (givenPassword, savedPassword) {
+AdminSchema.statics.isPasswordMatched = async function (givenPassword, savedPassword) {
   return await bcrypt.compare(givenPassword, savedPassword);
 };
 
 // Hash the password
-UserSchema.pre('save', async function (next) {
+AdminSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next();
   }
@@ -118,7 +97,7 @@ UserSchema.pre('save', async function (next) {
   next();
 });
 
-// Model
-const User = model('User', UserSchema);
+// Statics
+const Admin = model('Admin', AdminSchema);
 
-module.exports = User;
+module.exports = Admin;
