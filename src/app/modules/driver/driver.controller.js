@@ -1,22 +1,23 @@
-const { UserService } = require('./auth.service');
 const sendResponse = require('../../../shared/sendResponse');
 const catchAsync = require('../../../shared/catchasync');
-const config = require('../../../config'); 
+const config = require('../../../config');
+const {DriverService}= require('./driver.service');
 
-const registrationUser = catchAsync(async (req, res) => {
-  console.log('add', req.body);
-  await UserService.registrationUser(req.body);
+const registerDriver = catchAsync(async (req, res) => {
+  console.log("update --------------" );
+  await DriverService.registerDriver(req);
+
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'Please check your email to activate your account',
+    message: `Please check your email to activate your account`,
   });
 });
 
-const activateUser = catchAsync(async (req, res) => {
-  const result = await UserService.activateUser(req.body);
+const activateDriver = catchAsync(async (req, res) => {
+  const result = await DriverService.activateDriver(req.body);
   const { refreshToken } = result;
-  // set refresh token into cookie
+  // Set refresh token into cookie
   const cookieOptions = {
     secure: config.env === 'production',
     httpOnly: true,
@@ -26,48 +27,48 @@ const activateUser = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 201,
     success: true,
-    message: 'User activated successfully',
+    message: 'Driver activated successfully',
     data: result,
   });
 });
 
-const getAllUsers = catchAsync(async (req, res) => {
-  const result = await UserService.getAllUsers(req.query);
+const getAllDriver = catchAsync(async (req, res) => {
+  const result = await DriverService.getAllDriver(req.query);
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'Users retrieved successfully',
+    message: 'Drivers retrieved successfully',
     data: result.data,
     meta: result.meta,
   });
 });
 
-const getSingleUser = catchAsync(async (req, res) => {
-  const result = await UserService.getSingleUser(req.user);
+const getSingleDriver = catchAsync(async (req, res) => {
+  const result = await DriverService.getSingleDriver(req.user);
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'User retrieved successfully',
+    message: 'Driver retrieved successfully',
     data: result,
   });
 });
 
-const deleteUser = catchAsync(async (req, res) => {
+const deleteDriver = catchAsync(async (req, res) => {
   const id = req.params.id;
-  const result = await UserService.deleteUser(id);
+  const result = await DriverService.deleteDriver(id);
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'User deleted successfully',
+    message: 'Driver deleted successfully',
     data: result,
   });
 });
 
-const login = catchAsync(async (req, res) => {
+const loginDriver = catchAsync(async (req, res) => {
   const loginData = req.body;
-  const result = await UserService.loginUser(loginData);
+  const result = await DriverService.loginDriver(loginData);
   const { refreshToken } = result;
-  // set refresh token into cookie
+
   const cookieOptions = {
     secure: config.env === 'production',
     httpOnly: true,
@@ -76,15 +77,15 @@ const login = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'User logged in successfully!',
+    message: 'Driver logged in successfully!',
     data: result,
   });
 });
 
 const changePassword = catchAsync(async (req, res) => {
   const passwordData = req.body;
-  const user = req.user;
-  await UserService.changePassword(user, passwordData);
+  const driver = req.user;
+  await DriverService.changePassword(driver, passwordData);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -93,7 +94,7 @@ const changePassword = catchAsync(async (req, res) => {
 });
 
 const updateProfile = catchAsync(async (req, res) => {
-  const result = await UserService.updateProfile(req);
+  const result = await DriverService.updateProfile(req);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -103,7 +104,7 @@ const updateProfile = catchAsync(async (req, res) => {
 });
 
 const forgotPass = catchAsync(async (req, res) => {
-  await UserService.forgotPass(req.body);
+  await DriverService.forgotPass(req.body);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -112,7 +113,7 @@ const forgotPass = catchAsync(async (req, res) => {
 });
 
 const checkIsValidForgetActivationCode = catchAsync(async (req, res) => {
-  const result = await UserService.checkIsValidForgetActivationCode(req.body);
+  const result = await DriverService.checkIsValidForgetActivationCode(req.body);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -123,7 +124,8 @@ const checkIsValidForgetActivationCode = catchAsync(async (req, res) => {
 
 const resendActivationCode = catchAsync(async (req, res) => {
   const data = req.body;
-  const result = await UserService.resendActivationCode(data);
+  const result = await DriverService.resendActivationCode(data);
+
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -133,7 +135,7 @@ const resendActivationCode = catchAsync(async (req, res) => {
 });
 
 const resetPassword = catchAsync(async (req, res) => {
-  await UserService.resetPassword(req);
+  await DriverService.resetPassword(req.body);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -142,7 +144,7 @@ const resetPassword = catchAsync(async (req, res) => {
 });
 
 const deleteMyAccount = catchAsync(async (req, res) => {
-  await UserService.deleteMyAccount(req.body);
+  await DriverService.deleteMyAccount(req.body);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -150,32 +152,35 @@ const deleteMyAccount = catchAsync(async (req, res) => {
   });
 });
 
-const blockUser = catchAsync(async (req, res) => {
+const blockDriver = catchAsync(async (req, res) => {
   const id = req.params.id;
-  const result = await UserService.blockUser(id);
+  const result = await DriverService.blockDriver(id);
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'User blocked successfully',
+    message: 'Driver blocked successfully',
     data: result,
   });
 });
+ 
+ 
+ 
 
-const UserController = {
-    registrationUser,
-    activateUser,
-    login,
-    deleteMyAccount,
-    changePassword,
-    forgotPass,
-    resetPassword,
-    resendActivationCode,
-    checkIsValidForgetActivationCode,
-    getAllUsers,
-    getSingleUser,
-    blockUser,
-    updateProfile,
-    deleteUser
-  };
-  
-  module.exports = { UserController };
+const DriverController = {
+  getAllDriver,
+  getSingleDriver,
+  deleteDriver,
+  registerDriver,
+  loginDriver,
+  changePassword,
+  updateProfile,
+  forgotPass,
+  resetPassword,
+  activateDriver,
+  deleteMyAccount,
+  checkIsValidForgetActivationCode,
+  resendActivationCode,
+  blockDriver, 
+};
+
+module.exports = { DriverController };
