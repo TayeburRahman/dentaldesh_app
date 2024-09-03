@@ -1,6 +1,10 @@
 const { Server } = require('socket.io');
 const getUserDetailsFromToken = require('../helpers/getUserDetailsFromToken');
 
+
+
+// online user
+const onlineUser = new Set();
 const socket = (io) => {
   io.on('connection', async(socket) => {
     const token = socket.handshake.auth.token;
@@ -10,10 +14,12 @@ const socket = (io) => {
   console.log(currentUserId)
   // create room -----------
   socket.join(currentUserId)
-    // socket.on('join', (userId) => {
-    //   socket.join(userId);
-    //   console.log(`User ${userId} joined room`);
-    // });
+
+  // set online user
+  onlineUser.add(currentUserId);
+  // send to the client
+  io.emit('onlineUser', Array.from(onlineUser));
+  
     // Disconnect user
     socket.on('disconnect', () => {
       console.log('A user disconnected');
