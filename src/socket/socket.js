@@ -1,9 +1,10 @@
 const { Server } = require('socket.io');
 
 const socket = (io) => {
-  logger.info(`DB ccc Successfully at ${new Date().toLocaleString()}`);
   io.on('connection', (socket) => {
-    console.log('👤 A user connected successfully',+ io.id);
+    const token = socket.handshake.auth.token;
+  console.log(token);
+  
     // socket.on('join', (userId) => {
     //   socket.join(userId);
     //   console.log(`User ${userId} joined room`);

@@ -24,13 +24,13 @@ const registrationUser = async (payload) => {
   const newUser = await Admin.create(payload);
   const data = { user: { name: user.name } };
 
-  sendEmail({
-    email: user.email,
-    subject: 'Congratulations to register successfully',
-    html: registrationSuccess(data),
-  }).catch(error => {
-    logger.error('Failed to send email:', error);
-  });
+  // sendEmail({
+  //   email: user.email,
+  //   subject: 'Congratulations to register successfully',
+  //   html: registrationSuccess(data),
+  // }).catch(error => {
+  //   logger.error('Failed to send email:', error);
+  // });
 
   const { password: omit, ...userWithoutPassword } = newUser.toObject();
 

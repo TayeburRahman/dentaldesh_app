@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Server } = require('socket.io'); 
 const { errorLogger, logger } = require('./shared/logger');
 // const socket = require('./connection/socket'); 
-
+const socket = require("./socket/socket")
 
 // Create an Express app
 const app = require('./app')
@@ -11,7 +11,6 @@ const app = require('./app')
 // Database connection
 const connectDB = require('./connection/connectDB');
 const config = require('./config');
-const socket = require('./socket/socket');
 
 // Main function to start the server and set up Socket.IO
 async function main() {
