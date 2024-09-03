@@ -21,7 +21,7 @@ async function main() {
 
     // Start the server
     const server = app.listen(port, config.base_url, () => {
-      logger.info(`App listening on http://192.168.10.152:${config.port}`);
+      logger.info(`App listening on http://192.168.10.32:${config.port}`);
     });
 
     // Set up Socket.IO
