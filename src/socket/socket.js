@@ -6,7 +6,10 @@ const socket = (io) => {
     const token = socket.handshake.auth.token;
   console.log(token);
   const currentUser = await getUserDetailsFromToken(token);
-  console.log(currentUser)
+  const currentUserId = currentUser?._id.toString();
+  console.log(currentUserId)
+  // create room -----------
+  socket.join(currentUserId)
     // socket.on('join', (userId) => {
     //   socket.join(userId);
     //   console.log(`User ${userId} joined room`);
