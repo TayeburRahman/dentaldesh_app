@@ -28,7 +28,7 @@ async function main() {
     const socketIO = new Server(server, {
       pingTimeout: 60000,
       cors: {
-        origin: '*',
+        origin: 'http://localhost:5173',
       },
     });
     socket(socketIO);
