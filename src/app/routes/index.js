@@ -1,17 +1,23 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); 
+const AuthRoutes = require('../modules/auth/auth.routes');
+const AdminRoutes = require('../modules/admin/admin.routes');
+const DriverRoutes = require('../modules/driver/driver.router');
 
 // Define routes
-const moduleRoutes = [
-  // Uncomment and define your routes here
-  // {
-  //   path: '/auth',
-  //   route: require('./authRoutes'),
-  // },
-  // {
-  //   path: '/auth/driver',
-  //   route: require('./driverRoutes'),
-  // },
+const moduleRoutes = [ 
+  {
+    path: '/user',
+    route: AuthRoutes,
+  },
+  {
+    path: '/admin',
+    route: AdminRoutes , // Adjusted for admin routes
+  },
+  {
+    path: '/driver',
+    route: DriverRoutes,
+  },
   // {
   //   path: '/message',
   //   route: require('./messageRoutes'),
