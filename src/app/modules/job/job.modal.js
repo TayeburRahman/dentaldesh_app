@@ -10,6 +10,17 @@ const destinationSchema = {
     required: true,
   },
 };
+
+const potentialDriverSchema = new Schema({
+  driverId: {
+    type: Schema.Types.ObjectId,
+    ref: "Driver",
+  },
+  acceptedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 const dropOffDestinationSchema = new Schema({
   destination: {
     type: destinationSchema,
@@ -67,8 +78,15 @@ const jobSchema = new Schema({
     default: "pending",
     enum: ["pending", "accepted", "confirmed", "completed", "canceled"],
   },
-  driver: {
+  potentialDrivers: [
+    {
+      type: potentialDriverSchema,
+      default: [],
+    },
+  ],
+  confirmedDriver: {
     type: Schema.Types.ObjectId,
+    ref: "Driver",
     default: null,
   },
 });
