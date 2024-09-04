@@ -54,10 +54,10 @@ const socket = (io) => {
       let conversation = await Conversation.findOne({
         $or: [
           { sender: data?.sender, receiver: data?.receiver },
-          { sender: data?.receiver, receiver: data?.sende4r },
+          { sender: data?.receiver, receiver: data?.sender },
         ],
       });
-      // console.log("new conversatin", conversation);
+      console.log("new conversatin", conversation);
       // if conversation is not available then create a new conversation---------------
       if (!conversation) {
         conversation = await Conversation.create({
