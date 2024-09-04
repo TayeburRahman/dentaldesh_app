@@ -89,7 +89,6 @@ const socket = (io) => {
           $push: { messages: messageData },
         }
       );
-      // console.log("updated conversation", updateConversation);
 
       // get conversaton message -----------------------------------------
       const getConversationMessage = await Conversation.findOne({
