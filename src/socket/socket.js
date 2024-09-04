@@ -90,7 +90,7 @@ const socket = (io) => {
         }
       );
 
-      // get conversaton message -----------------------------------------
+      // get conversation message -----------------------------------------
       const getConversationMessage = await Conversation.findOne({
         $or: [
           { sender: data?.sender, receiver: data?.receiver },

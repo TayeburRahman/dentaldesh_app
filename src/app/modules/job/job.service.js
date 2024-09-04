@@ -35,6 +35,14 @@ const updateJobStatusIntoDB = async (user, jobId, status) => {
   return result;
 };
 
+const confirmJobByUser = async (jobId, doctorId) => {
+  const result = await Job.updateOne(
+    { _id: jobId },
+    { status: "confirmed", confirmedDriver: doctorId }
+  );
+  return result;
+};
+
 const startTrip = async (jobId, destinationIndex) => {
   const job = await Job.findById(jobId);
 
@@ -97,6 +105,7 @@ const jobService = {
   getAllJobFromDB,
   startTrip,
   completedDestination,
+  confirmJobByUser,
 };
 
 module.exports = { jobService };

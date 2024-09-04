@@ -65,11 +65,24 @@ const completeDestination = catchAsync(async (req, res) => {
   });
 });
 
+const confirmJobByUser = catchAsync(async (req, res) => {
+  const jobId = req?.params?.jobId;
+  const doctorId = req?.body?.doctorId;
+  const result = await jobService.confirmJobByUser(jobId, doctorId);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Job confirmed successfully",
+    data: result,
+  });
+});
+
 const jobController = {
   createJob,
   getAllJobs,
   updateJobStatus,
   startTrip,
+  confirmJobByUser,
 };
 
 module.exports = { jobController };
