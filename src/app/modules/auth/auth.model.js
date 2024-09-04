@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const config = require('../../../config');
-const validator = require('validator');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const config = require("../../../config");
+const validator = require("validator");
 
 const { Schema, model } = mongoose;
 
@@ -19,11 +19,11 @@ const UserSchema = new Schema(
     },
     email: {
       type: String,
-      required: [true, 'Email is required'],
+      required: [true, "Email is required"],
       unique: true,
       validate: {
         validator: (value) => validator.isEmail(value),
-        message: 'Please provide a valid email address',
+        message: "Please provide a valid email address",
       },
     },
     phone_number: {
@@ -32,7 +32,7 @@ const UserSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
+      required: [true, "Password is required"],
       select: false,
     },
     address: {
@@ -40,15 +40,16 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ['USER'],
-      default: 'USER',
+      enum: ["USER"],
+      default: "USER",
     },
     age: {
       type: String,
     },
     profile_image: {
       type: String,
-      default: 'https://res.cloudinary.com/arafatleo/image/upload/v1720600946/images_1_dz5srb.png',
+      default:
+        "https://res.cloudinary.com/arafatleo/image/upload/v1720600946/images_1_dz5srb.png",
     },
     location: {
       type: String,
@@ -101,13 +102,16 @@ UserSchema.statics.isUserExist = async function (email) {
 };
 
 // Check password match
-UserSchema.statics.isPasswordMatched = async function (givenPassword, savedPassword) {
+UserSchema.statics.isPasswordMatched = async function (
+  givenPassword,
+  savedPassword
+) {
   return await bcrypt.compare(givenPassword, savedPassword);
 };
 
 // Hash the password
-UserSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
     return next();
   }
 
@@ -119,6 +123,6 @@ UserSchema.pre('save', async function (next) {
 });
 
 // Model
-const User = model('User', UserSchema);
+const User = model("User", UserSchema);
 
 module.exports = User;

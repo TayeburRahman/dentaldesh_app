@@ -3,6 +3,7 @@ const router = express.Router();
 const AuthRoutes = require('../modules/auth/auth.routes');
 const AdminRoutes = require('../modules/admin/admin.routes');
 const DriverRoutes = require('../modules/driver/driver.router');
+const ManageRoutes = require('../modules/manage-web/manage.routes');
 
 // Define routes
 const moduleRoutes = [ 
@@ -26,6 +27,10 @@ const moduleRoutes = [
   //   path: '/notification',
   //   route: require('./notificationRoutes'),
   // },
+  {
+    path: '/manage',
+    route: ManageRoutes,
+  },
 ];
 
 // Apply routes to the router

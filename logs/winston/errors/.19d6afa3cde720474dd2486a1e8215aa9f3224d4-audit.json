@@ -1,0 +1,85 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\.19d6afa3cde720474dd2486a1e8215aa9f3224d4-audit.json",
+    "files": [
+        {
+            "date": 1725269252314,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-02-15-error.log",
+            "hash": "a221abe95ea34e3d7f50b1fad5211822a0b20a4a59a6a21bb7e6449b44551455"
+        },
+        {
+            "date": 1725274874653,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-02-17-error.log",
+            "hash": "a204ec71f2f30d6d58369ca6447ebc976a5859e91c7aaefc6c5acbf13cc4ac35"
+        },
+        {
+            "date": 1725338012168,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-03-10-error.log",
+            "hash": "1503a4d44de5b42c7df79947ef08401d96a2892878747080f3e56a946c0d36d5"
+        },
+        {
+            "date": 1725339604824,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-03-11-error.log",
+            "hash": "46c8fd286c2043458ce454d0d0fa5fe3d2fac6ca2800e50808900eb229c80d9e"
+        },
+        {
+            "date": 1725345664239,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-03-12-error.log",
+            "hash": "f9ef3e9966472ca3f896163dd3bf02b30d28a0206780ebea802cef52ed0eef3a"
+        },
+        {
+            "date": 1725346814060,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-03-13-error.log",
+            "hash": "00e60eb034d5090c59164919217b82b5e3b40e9c14c83fe3e930db0b0bc9a6e2"
+        },
+        {
+            "date": 1725351396325,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-03-14-error.log",
+            "hash": "c966b83043b8276260f63b9df343268b5da96dd0dff9e9d59d6b919e6e26874c"
+        },
+        {
+            "date": 1725354039947,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-03-15-error.log",
+            "hash": "51c983a8d1bd8f2ac620f0e76c4955b1edfc80f112b2eb08e20b98f8591cf388"
+        },
+        {
+            "date": 1725357782277,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-03-16-error.log",
+            "hash": "16fd57196eb566825ed1794e46145bab2d056e8691cce56f0ef37ff08dcdb1de"
+        },
+        {
+            "date": 1725425808590,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-04-10-error.log",
+            "hash": "a09bef31d9f3b33ac8dc9ddb82e48e4c6cf3fa0f997da03606603be92154cf55"
+        },
+        {
+            "date": 1725426138452,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-04-11-error.log",
+            "hash": "b6ac3dd233655d234a207951a199d00bae7fdbf6e1bb1692cd70933253a965a6"
+        },
+        {
+            "date": 1725432393170,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-04-12-error.log",
+            "hash": "20c7572ae495cb5bdd1a7cd6518e2dec82040fff65bec5916fa29ae25e71f8dc"
+        },
+        {
+            "date": 1725439078773,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-04-14-error.log",
+            "hash": "068b01d98a1e8f16bbf83a8a9f10b8b1de38d06f2412251dc754f11e191c5737"
+        },
+        {
+            "date": 1725441224335,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-04-15-error.log",
+            "hash": "b89e9770f883c74d35a72c2550a11bc67a5b0473206d205e5cf213424c09642a"
+        },
+        {
+            "date": 1725447863662,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\errors\\um-2024-09-04-17-error.log",
+            "hash": "f6bb80a69874a030916eb6e5b76d95343b713657d526a95182fe94613b1c060f"
+        }
+    ],
+    "hashType": "sha256"
+}

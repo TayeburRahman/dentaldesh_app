@@ -1,0 +1,50 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\bdCalling\\thakur-saad\\projects\\dentaldesh_app\\logs\\winston\\successes\\.5f85a341697509a6bbe959b63f10d5efca2a0615-audit.json",
+    "files": [
+        {
+            "date": 1725359205968,
+            "name": "C:\\Users\\bdCalling\\thakur-saad\\projects\\dentaldesh_app\\logs\\winston\\successes\\um-2024-09-03-16-success.log",
+            "hash": "7c8d2bbc2791564445397352542df7cf6cc9ea31e7069284fb634e6b8444a184"
+        },
+        {
+            "date": 1725361542096,
+            "name": "C:\\Users\\bdCalling\\thakur-saad\\projects\\dentaldesh_app\\logs\\winston\\successes\\um-2024-09-03-17-success.log",
+            "hash": "9a5fe52d52802c3b305cc18c737b9a91b70e5ab4231e43a9076ca2f061094290"
+        },
+        {
+            "date": 1725366159831,
+            "name": "C:\\Users\\bdCalling\\thakur-saad\\projects\\dentaldesh_app\\logs\\winston\\successes\\um-2024-09-03-18-success.log",
+            "hash": "ca9ec5cf3ab5f2f441cd1151e945a44242551a97253fc8962afdb39dd8d6e3af"
+        },
+        {
+            "date": 1725419876492,
+            "name": "C:\\Users\\bdCalling\\thakur-saad\\projects\\dentaldesh_app\\logs\\winston\\successes\\um-2024-09-04-09-success.log",
+            "hash": "1bde0684abd12df69a04af20c2507ee44ec3e5aef50115005ef7fe7837055f95"
+        },
+        {
+            "date": 1725423435588,
+            "name": "C:\\Users\\bdCalling\\thakur-saad\\projects\\dentaldesh_app\\logs\\winston\\successes\\um-2024-09-04-10-success.log",
+            "hash": "700426a733b2f50e1cd6c59df957881281bf560b2c39076d3d3f48284c7813c2"
+        },
+        {
+            "date": 1725428054250,
+            "name": "C:\\Users\\bdCalling\\thakur-saad\\projects\\dentaldesh_app\\logs\\winston\\successes\\um-2024-09-04-11-success.log",
+            "hash": "677d0ad613a9c8f0ae65dc99bcecae3722d77fc661d648c0ce2e2f8d2ba6ffc8"
+        },
+        {
+            "date": 1725429860588,
+            "name": "C:\\Users\\bdCalling\\thakur-saad\\projects\\dentaldesh_app\\logs\\winston\\successes\\um-2024-09-04-12-success.log",
+            "hash": "4361f790a098112f2f0a479bd1c3525def7a62af3c3863839a3a094b10062739"
+        },
+        {
+            "date": 1725437068406,
+            "name": "C:\\Users\\bdCalling\\thakur-saad\\projects\\dentaldesh_app\\logs\\winston\\successes\\um-2024-09-04-14-success.log",
+            "hash": "23b6110dcf9b1d6c4e6744b5e8549b50404bb05a6f38e45fbaf3dcdde4044680"
+        }
+    ],
+    "hashType": "sha256"
+}

@@ -1,0 +1,85 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\.e87946b475e9c84dd26cdfaaf9ec8295ad20a1ee-audit.json",
+    "files": [
+        {
+            "date": 1725269252310,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-02-15-success.log",
+            "hash": "4d2001d8fbf9cf415d8720fb87ce19ff89a078be9554f790c265701fd030e5b7"
+        },
+        {
+            "date": 1725274874650,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-02-17-success.log",
+            "hash": "14e78335c1f6d5917f6e91789331ca70c129aef090ac7976c92fe13627350b8c"
+        },
+        {
+            "date": 1725338012166,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-03-10-success.log",
+            "hash": "c1d5f1a1da9e3ac3c991ae03f788d88d1dc725b0a0becbb1afa989234db11716"
+        },
+        {
+            "date": 1725339604820,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-03-11-success.log",
+            "hash": "ed095a3fd485c86bd0f9a71035256f29058d231cfdaec2604d6cf6706b9150f8"
+        },
+        {
+            "date": 1725345664236,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-03-12-success.log",
+            "hash": "08a62652adf82aac995112f12141d4bd33ca75761df800c8fc834f6523967190"
+        },
+        {
+            "date": 1725346814056,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-03-13-success.log",
+            "hash": "6e9c67ee40bed8ebb37112928769fb8e531171f1d362f0ae9aad9743dffc4f2c"
+        },
+        {
+            "date": 1725351396322,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-03-14-success.log",
+            "hash": "7c9b1df61a7a00823b0920ebc812cce25da4ac66ab94f2f5d4fe30b9add94d42"
+        },
+        {
+            "date": 1725354039945,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-03-15-success.log",
+            "hash": "8a9175ce9566e4851a259e1f15ff7c5e8e0c401c7c3020cffbf2bbfa702191df"
+        },
+        {
+            "date": 1725357782272,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-03-16-success.log",
+            "hash": "dd487215d3c87652e391c357bb70983804ba5ae4963c5089a85d4b94799734c1"
+        },
+        {
+            "date": 1725425808587,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-04-10-success.log",
+            "hash": "0ca5e36fa85ec46f58ca843d1b4c9b1781c70ffc551ca118ee90e39c4c40fc6d"
+        },
+        {
+            "date": 1725426138448,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-04-11-success.log",
+            "hash": "4bb42c261d1656857d0c79ab0e3c3b4b8d794773b91f6c4dc96a156e34676fd6"
+        },
+        {
+            "date": 1725432393166,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-04-12-success.log",
+            "hash": "3f4c1523a5da9668252a302a13629adb2a542356b88efae73e88ec19f7eb12f4"
+        },
+        {
+            "date": 1725439078769,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-04-14-success.log",
+            "hash": "a6dec4d6db5c583a86b14a8db9c11f26fa679b72aba9f63751d0be4f5c60d416"
+        },
+        {
+            "date": 1725441224332,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-04-15-success.log",
+            "hash": "28a4e88a074e93d956651defc600e8e77a8a66ea8c8424696de63ca569d3d5cb"
+        },
+        {
+            "date": 1725447863658,
+            "name": "C:\\Users\\bdCalling\\Tayebur\\dentaldesh_server\\logs\\winston\\successes\\um-2024-09-04-17-success.log",
+            "hash": "210a08273e151fbeb3f92e133d7a5baf5efee1274c579cd58e5ff55aa91f0a11"
+        }
+    ],
+    "hashType": "sha256"
+}
