@@ -87,7 +87,16 @@ const socket = (io) => {
           { sender: data?.receiver, receiver: data?.sender },
         ],
       });
-      console.log("conversation message", getConversationMessage);
+
+      // send to the client side -----------------------------------------------------
+      io.to(data?.sender).emit(
+        "message",
+        getConversationMessage?.messages || []
+      );
+      io.to(data?.receiver).emit(
+        "message",
+        getConversationMessage?.messages || []
+      );
     });
 
     // Disconnect user
