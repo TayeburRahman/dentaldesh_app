@@ -1,5 +1,7 @@
 const { Server } = require("socket.io");
 const getUserDetailsFromToken = require("../helpers/getUserDetailsFromToken");
+const Driver = require("../app/modules/driver/driver.model");
+const User = require("../app/modules/auth/auth.model");
 
 // online user
 const onlineUser = new Set();
@@ -21,6 +23,26 @@ const socket = (io) => {
     // message page
     socket.on("message-page", async (id) => {
       console.log("received userid for message page", id);
+      let userDetails;
+      const driverUserDetials = await Driver.findById(id);
+
+      if (driverUserDetials) {
+        userDetails = driverUserDetials;
+      }
+      const dentalUserDetails = await User.findById(id);
+
+      if (dentalUserDetails) {
+        userDetails = dentalUserDetails;
+      }
+      if (userDetails) {
+        const payload = {
+          _id: userDetails._id,
+          name: userDetails.name,
+          profile_image: userDetails?.profile_image,
+          online: onlineUser.has(id),
+        };
+      }
+      socket.emit("message-user", payload);
     });
 
     // Disconnect user
