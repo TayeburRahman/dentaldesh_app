@@ -38,7 +38,7 @@ router.post('/auth/verify-otp', DriverController.checkIsValidForgetActivationCod
 
 router.get(
   '/auth/admin/drivers',
-  auth(ENUM_USER_ROLE.ADMIN),
+  // auth(ENUM_USER_ROLE.ADMIN),
   DriverController.getAllDriver
 );
 

@@ -53,7 +53,7 @@ router.patch(
 // Admin routes
 router.get(
     '/auth/get_all',
-    auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+    // auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
     UserController.getAllUsers
   );
   

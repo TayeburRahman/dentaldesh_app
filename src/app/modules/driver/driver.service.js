@@ -1,14 +1,16 @@
-const bcrypt = require('bcrypt');
-const ApiError = require('../../../errors/ApiError');
-const cron = require('node-cron');
-const {jwtHelpers} = require('../../../helpers/jwtHelpers');
-const config = require('../../../config');
-const Driver = require('./driver.model');
-const httpStatus = require('http-status');
-const sendEmail = require('../../../utils/sendEmail');
-const { registrationSuccessEmailBody } = require('../../../mails/email.register'); 
-const sendResetEmail = require('../../../utils/sendResetMails');
-const logger = require('../../../shared/logger'); 
+const bcrypt = require("bcrypt");
+const ApiError = require("../../../errors/ApiError");
+const cron = require("node-cron");
+const { jwtHelpers } = require("../../../helpers/jwtHelpers");
+const config = require("../../../config");
+const Driver = require("./driver.model");
+const httpStatus = require("http-status");
+const sendEmail = require("../../../utils/sendEmail");
+const {
+  registrationSuccessEmailBody,
+} = require("../../../mails/email.register");
+const sendResetEmail = require("../../../utils/sendResetMails");
+const logger = require("../../../shared/logger");
 
 //!
 const registerDriver = async (req) => {
@@ -21,11 +23,14 @@ const registerDriver = async (req) => {
   const isEmailExist = await Driver.findOne({ email });
 
   if (isEmailExist) {
-    throw new ApiError(400, 'Email already exists');
+    throw new ApiError(400, "Email already exists");
   }
 
   if (confirmPassword !== password) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "Password and Confirm Password didn't match");
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Password and Confirm Password didn't match"
+    );
   }
 
   if (files) {
@@ -50,7 +55,7 @@ const registerDriver = async (req) => {
   try {
     sendEmail({
       email: email,
-      subject: 'Activate Your Account',
+      subject: "Activate Your Account",
       html: registrationSuccessEmailBody(data),
     });
   } catch (error) {
@@ -68,7 +73,7 @@ const updateProfile = async (req) => {
 
   const checkValidDriver = await Driver.findById(userId);
   if (!checkValidDriver) {
-    throw new ApiError(404, 'You are not authorized');
+    throw new ApiError(404, "You are not authorized");
   }
 
   if (files) {
@@ -113,7 +118,7 @@ const activateDriver = async (payload) => {
 
   const existUser = await Driver.findOne({ email: email });
   if (!existUser) {
-    throw new ApiError(400, 'Driver not found!');
+    throw new ApiError(400, "Driver not found!");
   }
   if (existUser.activationCode !== code) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Code didn't match");
@@ -148,7 +153,7 @@ const activateDriver = async (payload) => {
   };
 };
 
-cron.schedule('* * * * *', async () => {
+cron.schedule("* * * * *", async () => {
   try {
     const now = new Date();
     const result = await Driver.deleteMany({
@@ -159,25 +164,26 @@ cron.schedule('* * * * *', async () => {
       logger.info(`Deleted ${result.deletedCount} expired inactive users`);
     }
   } catch (error) {
-    logger.error('Error deleting expired users:', error);
+    logger.error("Error deleting expired users:", error);
   }
 });
 
 //!
 const getAllDriver = async (query) => {
-  const driverQuery = new  Driver.find() 
-    .search(['name'])
-    .filter()
-    .sort()
-    .paginate()
-    .fields();
+  const driverQuery = await Driver.find();
+  // const driverQuery = new  Driver.find()
+  // .search(['name'])
+  // .filter()
+  // .sort()
+  // .paginate()
+  // .fields();
 
-  const result = await driverQuery.modelQuery;
-  const meta = await driverQuery.countTotal();
+  // const result = await driverQuery.modelQuery;
+  // const meta = await driverQuery.countTotal();
 
   return {
-    meta,
-    data: result,
+    // meta,
+    data: driverQuery,
   };
 };
 
@@ -185,7 +191,7 @@ const getAllDriver = async (query) => {
 const getSingleDriver = async (user) => {
   const result = await Driver.findById(user?.userId);
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Driver not found');
+    throw new ApiError(httpStatus.NOT_FOUND, "Driver not found");
   }
 
   return result;
@@ -201,21 +207,27 @@ const deleteDriver = async (id) => {
 //!
 const loginDriver = async (payload) => {
   const { email, password } = payload;
+  console.log(email);
 
-  const isDriverExist = await Driver.isDriverExist(email);
+  const isDriverExist = await Driver.findOne({ email });
+  console.log(isDriverExist);
+  // const isDriverExist = await Driver.isDriverExist(email);
   const checkDriver = await Driver.findOne({ email });
   if (!isDriverExist) {
-    throw new ApiError(404, 'Driver does not exist');
+    throw new ApiError(404, "Driver does not exist");
   }
 
   if (
     isDriverExist.password &&
     !(await Driver.isPasswordMatched(password, isDriverExist.password))
   ) {
-    throw new ApiError(402, 'Wrong credentials');
+    throw new ApiError(402, "Wrong credentials");
   }
   if (isDriverExist.isActive === false) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Please activate your account then try to login');
+    throw new ApiError(
+      httpStatus.UNAUTHORIZED,
+      "Please activate your account then try to login"
+    );
   }
 
   const { _id: userId, role } = isDriverExist;
@@ -245,14 +257,14 @@ const deleteMyAccount = async (payload) => {
 
   const isDriverExist = await Driver.isDriverExist(email);
   if (!isDriverExist) {
-    throw new ApiError(404, 'Driver does not exist');
+    throw new ApiError(404, "Driver does not exist");
   }
 
   if (
     isDriverExist.password &&
     !(await Driver.isPasswordMatched(password, isDriverExist.password))
   ) {
-    throw new ApiError(402, 'Password is incorrect');
+    throw new ApiError(402, "Password is incorrect");
   }
   return await Driver.findOneAndDelete({ email });
 };
@@ -262,179 +274,187 @@ const changePassword = async (user, payload) => {
   const { userId } = user;
   const { oldPassword, newPassword, confirmPassword } = payload;
   if (newPassword !== confirmPassword) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Password and Confirm password do not match');
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Password and Confirm password do not match"
+    );
   }
-  const isDriverExist = await Driver.findOne({ _id: userId }).select('+password');
+  const isDriverExist = await Driver.findOne({ _id: userId }).select(
+    "+password"
+  );
   if (!isDriverExist) {
-    throw new ApiError(404, 'Driver does not exist');
+    throw new ApiError(404, "Driver does not exist");
   }
   if (
     isDriverExist.password &&
     !(await Driver.isPasswordMatched(oldPassword, isDriverExist.password))
   ) {
-    throw new ApiError(402, 'Old password is incorrect');
+    throw new ApiError(402, "Old password is incorrect");
   }
   isDriverExist.password = newPassword;
   await isDriverExist.save();
 };
 
 const forgotPass = async (payload) => {
-    const user = await Driver.findOne({ email: payload.email }, { _id: 1, role: 1 });
-  
-    if (!user) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Driver does not exist!');
-    }
-  
-    let profile = null;
-    if (user.role === 'DRIVER') {
-      profile = await Driver.findOne({ _id: user._id });
-    }
-  
-    if (!profile) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Profile not found!');
-    }
-  
-    if (!profile.email) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Email not found!');
-    }
-  
-    const activationCode = forgetActivationCode();
-    const expiryTime = new Date(Date.now() + 15 * 60 * 1000);
-    user.verifyCode = activationCode;
-    user.verifyExpire = expiryTime;
-    await user.save();
-  
-    sendResetEmail(
-      profile.email,
-      `
+  const user = await Driver.findOne(
+    { email: payload.email },
+    { _id: 1, role: 1 }
+  );
+
+  if (!user) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Driver does not exist!");
+  }
+
+  let profile = null;
+  if (user.role === "DRIVER") {
+    profile = await Driver.findOne({ _id: user._id });
+  }
+
+  if (!profile) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Profile not found!");
+  }
+
+  if (!profile.email) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Email not found!");
+  }
+
+  const activationCode = forgetActivationCode();
+  const expiryTime = new Date(Date.now() + 15 * 60 * 1000);
+  user.verifyCode = activationCode;
+  user.verifyExpire = expiryTime;
+  await user.save();
+
+  sendResetEmail(
+    profile.email,
+    `
         <div>
           <p>Hi, ${profile.name}</p>
           <p>Your password reset Code: ${activationCode}</p>
           <p>Thank you</p>
         </div>
       `
-    );
-  };
-  
-  //!
-  const resendActivationCode = async (payload) => {
-    const email = payload.email;
-    const user = await Driver.findOne({ email });
-  
-    if (!user) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Driver does not exist!');
-    }
-  
-    let profile = null;
-    if (user.role === 'DRIVER') {
-      profile = await Driver.findOne({ _id: user._id });
-    }
-  
-    if (!profile) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Profile not found!');
-    }
-  
-    if (!profile.email) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Email not found!');
-    }
-  
-    const activationCode = forgetActivationCode();
-    const expiryTime = new Date(Date.now() + 15 * 60 * 1000);
-    user.verifyCode = activationCode;
-    user.verifyExpire = expiryTime;
-    await user.save();
-  
-    sendResetEmail(
-      profile.email,
-      `
+  );
+};
+
+//!
+const resendActivationCode = async (payload) => {
+  const email = payload.email;
+  const user = await Driver.findOne({ email });
+
+  if (!user) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Driver does not exist!");
+  }
+
+  let profile = null;
+  if (user.role === "DRIVER") {
+    profile = await Driver.findOne({ _id: user._id });
+  }
+
+  if (!profile) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Profile not found!");
+  }
+
+  if (!profile.email) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Email not found!");
+  }
+
+  const activationCode = forgetActivationCode();
+  const expiryTime = new Date(Date.now() + 15 * 60 * 1000);
+  user.verifyCode = activationCode;
+  user.verifyExpire = expiryTime;
+  await user.save();
+
+  sendResetEmail(
+    profile.email,
+    `
         <div>
           <p>Hi, ${profile.name}</p>
           <p>Your password reset Code: ${activationCode}</p>
           <p>Thank you</p>
         </div>
       `
-    );
-  };
-  
-  //!
-  const forgetActivationCode = () => {
-    const activationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    return activationCode;
-  };
-  
-  //!
-  const checkIsValidForgetActivationCode = async (payload) => {
-    const user = await Driver.findOne({ email: payload.email });
-  
-    if (!user) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Driver does not exist!');
-    }
-  
-    if (user.verifyCode !== payload.code) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid reset code!');
-    }
-  
-    const currentTime = new Date();
-    if (currentTime > user.verifyExpire) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Reset code has expired!');
-    }
-  
-    return { valid: true };
-  };
-  
-  //!
-  const resetPassword = async (payload) => {
-    const { email, newPassword, confirmPassword } = payload;
-    if (newPassword !== confirmPassword) {
-      throw new ApiError(httpStatus.BAD_REQUEST, "Password didn't match");
-    }
-    const user = await Driver.findOne({ email }, { _id: 1 });
-  
-    if (!user) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'User not found!');
-    }
-  
-    const password = await bcrypt.hash(newPassword, Number(config.bcrypt_salt_rounds));
-  
-    await Driver.updateOne({ email }, { password }, { new: true });
-    user.verifyCode = null;
-    user.verifyExpire = null;
-    await user.save();
-  };
-  
-  //!
-  const blockDriver = async (id) => {
-    const isDriverExist = await Driver.findById(id);
-    if (!isDriverExist) {
-      throw new ApiError(httpStatus.NOT_FOUND, 'No Driver Found');
-    }
-    const result = await Driver.findByIdAndUpdate(
-      { _id: id },
-      { is_block: !isDriverExist.is_block },
-      { new: true }
-    );
-  
-    return result;
-  };
-  
-  
+  );
+};
 
+//!
+const forgetActivationCode = () => {
+  const activationCode = Math.floor(100000 + Math.random() * 900000).toString();
+  return activationCode;
+};
 
-  const DriverService = {
-    getAllDriver,
-    getSingleDriver,
-    deleteDriver,
-    registerDriver,
-    loginDriver,
-    changePassword,
-    updateProfile,
-    forgotPass,
-    resetPassword,
-    activateDriver,
-    deleteMyAccount,
-    checkIsValidForgetActivationCode,
-    resendActivationCode,
-    blockDriver, 
-  };
-  
-  module.exports = { DriverService };
+//!
+const checkIsValidForgetActivationCode = async (payload) => {
+  const user = await Driver.findOne({ email: payload.email });
+
+  if (!user) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Driver does not exist!");
+  }
+
+  if (user.verifyCode !== payload.code) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Invalid reset code!");
+  }
+
+  const currentTime = new Date();
+  if (currentTime > user.verifyExpire) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Reset code has expired!");
+  }
+
+  return { valid: true };
+};
+
+//!
+const resetPassword = async (payload) => {
+  const { email, newPassword, confirmPassword } = payload;
+  if (newPassword !== confirmPassword) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Password didn't match");
+  }
+  const user = await Driver.findOne({ email }, { _id: 1 });
+
+  if (!user) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "User not found!");
+  }
+
+  const password = await bcrypt.hash(
+    newPassword,
+    Number(config.bcrypt_salt_rounds)
+  );
+
+  await Driver.updateOne({ email }, { password }, { new: true });
+  user.verifyCode = null;
+  user.verifyExpire = null;
+  await user.save();
+};
+
+//!
+const blockDriver = async (id) => {
+  const isDriverExist = await Driver.findById(id);
+  if (!isDriverExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, "No Driver Found");
+  }
+  const result = await Driver.findByIdAndUpdate(
+    { _id: id },
+    { is_block: !isDriverExist.is_block },
+    { new: true }
+  );
+
+  return result;
+};
+
+const DriverService = {
+  getAllDriver,
+  getSingleDriver,
+  deleteDriver,
+  registerDriver,
+  loginDriver,
+  changePassword,
+  updateProfile,
+  forgotPass,
+  resetPassword,
+  activateDriver,
+  deleteMyAccount,
+  checkIsValidForgetActivationCode,
+  resendActivationCode,
+  blockDriver,
+};
+
+module.exports = { DriverService };
