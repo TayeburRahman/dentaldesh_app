@@ -41,8 +41,15 @@ const socket = (io) => {
           profile_image: userDetails?.profile_image,
           online: onlineUser.has(id),
         };
+        socket.emit("message-user", payload);
+      } else {
+        console.log("User not found");
       }
-      socket.emit("message-user", payload);
+    });
+
+    // new message
+    socket.on("new-message", async (data) => {
+      console.log(data);
     });
 
     // Disconnect user
