@@ -118,19 +118,20 @@ cron.schedule('* * * * *', async () => {
 
 // Get all users
 const getAllUsers = async (query) => {
-    const userQuery = new User.find()
-        .search()
-        .filter()
-        .sort()
-        .paginate()
-        .fields();
+    const userQuery = await User.find()
+    // const userQuery = new User.find()
+    //     .search()
+    //     .filter()
+    //     .sort()
+    //     .paginate()
+    //     .fields();
 
-    const result = await userQuery.modelQuery;
-    const meta = await userQuery.countTotal();
+    // const result = await userQuery.modelQuery;
+    // const meta = await userQuery.countTotal();
 
     return {
-        meta,
-        data: result,
+        // meta,
+        data: userQuery,
     };
 };
 

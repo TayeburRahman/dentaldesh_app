@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { Server } = require('socket.io'); 
 const { errorLogger, logger } = require('./shared/logger');
-const socket = require('./connection/socket'); // Import the Socket.IO setup
+// const socket = require('./connection/socket'); 
+const socket = require("./socket/socket")
 
 // Create an Express app
 const app = require('./app')
@@ -28,7 +29,7 @@ async function main() {
     const socketIO = new Server(server, {
       pingTimeout: 60000,
       cors: {
-        origin: '*',
+        origin: 'http://localhost:5173',
       },
     });
     socket(socketIO);

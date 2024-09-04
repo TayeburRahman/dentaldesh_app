@@ -210,8 +210,11 @@ const deleteDriver = async (id) => {
 //!
 const loginDriver = async (payload) => {
   const { email, password } = payload;
+  console.log(email);
 
-  const isDriverExist = await Driver.isDriverExist(email);
+  const isDriverExist = await Driver.findOne({ email });
+  console.log(isDriverExist);
+  // const isDriverExist = await Driver.isDriverExist(email);
   const checkDriver = await Driver.findOne({ email });
   if (!isDriverExist) {
     throw new ApiError(404, "Driver does not exist");

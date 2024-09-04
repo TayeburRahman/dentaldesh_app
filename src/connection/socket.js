@@ -1,6 +1,7 @@
 const { Server } = require('socket.io');
 
 const socket = (io) => {
+  // console.log('👤 A user connected');
   io.on('connection', (socket) => {
     console.log('👤 A user connected');
 

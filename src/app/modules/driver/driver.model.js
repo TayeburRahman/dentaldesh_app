@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const config = require('../../../config');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const config = require("../../../config");
 
 const locationSchema = new mongoose.Schema({
   latitude: {
@@ -34,7 +34,7 @@ const driverSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: 'DRIVER',
+      default: "DRIVER",
     },
     phoneNumber: {
       type: String,
@@ -51,7 +51,7 @@ const driverSchema = new mongoose.Schema(
     profile_image: {
       type: String,
       default:
-        'https://res.cloudinary.com/arafatleo/image/upload/v1720600946/images_1_dz5srb.png',
+        "https://res.cloudinary.com/arafatleo/image/upload/v1720600946/images_1_dz5srb.png",
     },
     licenseFrontImage: {
       type: String,
@@ -133,7 +133,7 @@ const driverSchema = new mongoose.Schema(
   },
   {
     timestamps: false,
-  },
+  }
 );
 
 driverSchema.statics.isDriverExist = async function (email) {
@@ -145,26 +145,29 @@ driverSchema.statics.isDriverExist = async function (email) {
       password: 1,
       role: 1,
       phoneNumber: 1,
-    },
+    }
   );
 };
 
-driverSchema.statics.isPasswordMatched = async function (givenPassword, savedPassword) {
+driverSchema.statics.isPasswordMatched = async function (
+  givenPassword,
+  savedPassword
+) {
   return await bcrypt.compare(givenPassword, savedPassword);
 };
 
-driverSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
+driverSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
     return next();
   }
 
   this.password = await bcrypt.hash(
     this.password,
-    Number(config.bcrypt_salt_rounds),
+    Number(config.bcrypt_salt_rounds)
   );
   next();
 });
 
-const Driver = mongoose.model('Driver', driverSchema);
+const Driver = mongoose.model("Driver", driverSchema);
 
 module.exports = Driver;
