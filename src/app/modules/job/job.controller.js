@@ -28,7 +28,11 @@ const getAllJobs = catchAsync(async (req, res) => {
 const updateJobSatus = catchAsync(async (req, res) => {
   const jobId = req?.params?.jobId;
   console.log(req.body);
-  const result = await jobService.updateJobStatusIntoDB(jobId);
+  const result = await jobService.updateJobStatusIntoDB(
+    req?.user,
+    jobId,
+    req?.body?.status
+  );
   sendResponse(res, {
     statusCode: 200,
     success: true,

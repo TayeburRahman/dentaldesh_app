@@ -6,5 +6,9 @@ const router = express.Router();
 
 router.get("/", jobControler.getAllJobs);
 router.post("/create-job", auth(ENUM_USER_ROLE.USER), jobControler.createJob);
-router.patch("/update-job-status/:userId", jobControler.updateJobSatus);
+router.patch(
+  "/update-job-status/:jobId",
+  auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.DRIVER),
+  jobControler.updateJobSatus
+);
 module.exports = router;

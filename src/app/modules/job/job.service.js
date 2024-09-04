@@ -1,3 +1,5 @@
+const httpStatus = require("http-status");
+const ApiError = require("../../../errors/ApiError");
 const Job = require("./job.modal");
 
 const createJobIntoDB = async (userId, payload) => {
@@ -12,9 +14,22 @@ const getAllJobFromDB = async () => {
 };
 
 // update job
-const updateJobStatusIntoDB = async (jobId, payload) => {
-  console.log("job id", jobId);
-  console.log("payload", payload);
+const updateJobStatusIntoDB = async (user, jobId, status) => {
+  console.log("user", user);
+  let result;
+  if (status === "accepted") {
+    if (user?.role !== "DOCTOR") {
+      throw new ApiError(httpStatus.BAD_REQUEST, "You are not authorized");
+    }
+    result = await Job.updateOne(
+      { _id: jobId },
+      {
+        status: "accepted",
+        $push: { potentialDrivers: { driverId: user?.userId } },
+      }
+    );
+  }
+  return result;
 };
 
 const jobService = {
