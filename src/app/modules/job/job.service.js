@@ -12,8 +12,9 @@ const getAllJobFromDB = async () => {
 };
 
 // update job
-const updateJobStatusIntoDB = async (payload) => {
-  console.log("update the status");
+const updateJobStatusIntoDB = async (jobId, payload) => {
+  console.log("job id", jobId);
+  console.log("payload", payload);
 };
 
 const jobService = {
