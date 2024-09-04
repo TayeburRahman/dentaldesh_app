@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const config = require('../../../config');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const config = require("../../../config");
 
 const { Schema, model } = mongoose;
 
@@ -36,7 +36,7 @@ const AdminSchema = new Schema(
     },
     gender: {
       type: String,
-      enum: ['male', 'female', 'others'],
+      enum: ["male", "female", "others"],
     },
     date_of_birth: {
       type: Date,
@@ -44,7 +44,7 @@ const AdminSchema = new Schema(
     profile_image: {
       type: String,
       default:
-        'https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg',
+        "https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg",
     },
     verifyCode: {
       type: String,
@@ -54,8 +54,12 @@ const AdminSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ['ADMIN', 'SUPER_ADMIN'],
-      default: 'ADMIN',
+      enum: ["ADMIN", "SUPER_ADMIN"],
+      default: "ADMIN",
+    },
+    valid: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -80,13 +84,16 @@ AdminSchema.statics.isAdminExist = async function (email) {
 };
 
 // Check password match
-AdminSchema.statics.isPasswordMatched = async function (givenPassword, savedPassword) {
+AdminSchema.statics.isPasswordMatched = async function (
+  givenPassword,
+  savedPassword
+) {
   return await bcrypt.compare(givenPassword, savedPassword);
 };
 
 // Hash the password
-AdminSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
+AdminSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
     return next();
   }
 
@@ -98,6 +105,6 @@ AdminSchema.pre('save', async function (next) {
 });
 
 // Statics
-const Admin = model('Admin', AdminSchema);
+const Admin = model("Admin", AdminSchema);
 
 module.exports = Admin;

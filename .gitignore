@@ -1,7 +1,1 @@
 node_modules
-.vercel
-uploads/
-logs/
-dist/
-entrypoint.sh
-yarn.lock

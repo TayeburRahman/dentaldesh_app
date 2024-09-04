@@ -1,48 +1,48 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-console */
-const { Error } = require('mongoose');
-const config = require('../../config');
+const { Error } = require("mongoose");
+const config = require("../../config");
 
-const handleValidationError = require('../../errors/handleValidationError'); 
-const handleCastError = require('../../errors/handleCastError');
-const ApiError = require('../../errors/ApiError');
-const { JsonWebTokenError, TokenExpiredError } = require('jsonwebtoken');
-const httpStatus = require('http-status');
+const handleValidationError = require("../../errors/handleValidationError");
+const handleCastError = require("../../errors/handleCastError");
+const ApiError = require("../../errors/ApiError");
+const { JsonWebTokenError, TokenExpiredError } = require("jsonwebtoken");
+const httpStatus = require("http-status");
 
 const globalErrorHandler = (error, req, res, next) => {
-  config.env === 'development'
-    ? console.log('globalErrorHandler', error)
-    : console.error('globalErrorHandler', error);
+  config.env === "development"
+    ? console.log("globalErrorHandler", error)
+    : console.error("globalErrorHandler", error);
 
   let statusCode = 500;
-  let message = 'Something went wrong!';
+  let message = "Something went wrong!";
   let errorMessages = [];
 
-  if (error?.name === 'ValidationError') {
+  if (error?.name === "ValidationError") {
     const simplifiedError = handleValidationError(error);
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessages;
   } else if (error instanceof JsonWebTokenError) {
     statusCode = 401;
-    message = 'Invalid token';
+    message = "Invalid token";
     errorMessages = [
       {
-        path: '',
+        path: "",
         message: error.message,
       },
     ];
   } else if (error instanceof TokenExpiredError) {
     statusCode = 401;
-    message = 'Token has expired';
+    message = "Token has expired";
     errorMessages = [
       {
-        path: '',
+        path: "",
         message: error.message,
       },
     ];
-  } else if (error?.name === 'CastError') {
+  } else if (error?.name === "CastError") {
     const simplifiedError = handleCastError(error);
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
@@ -53,7 +53,7 @@ const globalErrorHandler = (error, req, res, next) => {
     errorMessages = error?.message
       ? [
           {
-            path: '',
+            path: "",
             message: error?.message,
           },
         ]
@@ -73,7 +73,7 @@ const globalErrorHandler = (error, req, res, next) => {
     message = error.message;
     errorMessages = [
       {
-        path: '',
+        path: "",
         message: error.message,
       },
     ];
@@ -82,7 +82,7 @@ const globalErrorHandler = (error, req, res, next) => {
     errorMessages = error?.message
       ? [
           {
-            path: '',
+            path: "",
             message: error?.message,
           },
         ]
@@ -93,7 +93,7 @@ const globalErrorHandler = (error, req, res, next) => {
     success: false,
     message,
     errorMessages,
-    stack: config.env !== 'production' ? error?.stack : undefined,
+    stack: config.env !== "production" ? error?.stack : undefined,
   });
 };
 

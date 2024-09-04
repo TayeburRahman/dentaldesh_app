@@ -152,6 +152,7 @@ const forgotPass = catchAsync(async (req, res) => {
 });
 
 const resetPassword = catchAsync(async (req, res) => {
+  console.log(req.body);
   await AdminService.resetPassword(req.body);
   sendResponse(res, {
     statusCode: 200,
