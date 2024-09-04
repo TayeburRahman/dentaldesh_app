@@ -16,12 +16,12 @@ const conversationSchema = new Schema(
     messages: [
       {
         msgByUserId: {
-          type: String, // Changed to String since it's no longer a reference to the User model
+          type: String,
           required: true,
         },
         text: {
           type: String,
-          required: true, // The actual text of the message
+          required: true,
         },
       },
     ],

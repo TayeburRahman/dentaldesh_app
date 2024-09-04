@@ -2,6 +2,7 @@ const { Server } = require("socket.io");
 const getUserDetailsFromToken = require("../helpers/getUserDetailsFromToken");
 const Driver = require("../app/modules/driver/driver.model");
 const User = require("../app/modules/auth/auth.model");
+const Conversation = require("../app/modules/conversation/conversation.model");
 
 // online user
 const onlineUser = new Set();
@@ -49,7 +50,34 @@ const socket = (io) => {
 
     // new message
     socket.on("new-message", async (data) => {
-      console.log(data);
+      // console.log(data);
+      let conversation = await Conversation.findOne({
+        $or: [
+          { sender: data?.sender, receiver: data?.receiver },
+          { sender: data?.receiver, receiver: data?.sende4r },
+        ],
+      });
+      // console.log("new conversatin", conversation);
+      // if conversation is not available then create a new conversation
+      if (!conversation) {
+        conversation = await Conversation.create({
+          sender: data?.sender,
+          receiver: data?.receiver,
+        });
+      }
+      const messageData = {
+        msgByUserId: data?.msgByUserId,
+        text: data?.text,
+      };
+      const updateConversation = await Conversation.updateOne(
+        {
+          _id: conversation?._id,
+        },
+        {
+          $push: { messages: messageData },
+        }
+      );
+      console.log("updated conversation", updateConversation);
     });
 
     // Disconnect user
