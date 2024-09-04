@@ -59,10 +59,44 @@ const startTrip = async (jobId, destinationIndex) => {
   res.send({ message: "Trip started for destination", job });
 };
 
+// complete destination
+const completedDestination = async (jobId) => {
+  const job = await Job.findById(jobId);
+
+  if (!job) {
+    return res.status(404).send({ message: "Job not found" });
+  }
+
+  const currentIndex = job.currentDestinationIndex;
+
+  // Check if the current destination is already completed
+  if (job.dropOffDestination[currentIndex].completed) {
+    return res.status(400).send({ message: "Destination already completed" });
+  }
+
+  // Mark the current destination as completed and set the end time
+  job.dropOffDestination[currentIndex].completed = true;
+  job.dropOffDestination[currentIndex].endTime = new Date();
+
+  // Increment the currentDestinationIndex to move to the next destination, if any
+  if (currentIndex + 1 < job.dropOffDestination.length) {
+    job.currentDestinationIndex += 1;
+  } else {
+    // If no more destinations, mark the job as completed
+    job.status = "completed";
+  }
+
+  await job.save();
+
+  res.send({ message: "Destination marked as completed", job });
+};
+
 const jobService = {
   createJobIntoDB,
   updateJobStatusIntoDB,
   getAllJobFromDB,
+  startTrip,
+  completedDestination,
 };
 
 module.exports = { jobService };

@@ -25,10 +25,10 @@ const socket = (io) => {
     socket.on("message-page", async (id) => {
       console.log("received userid for message page", id);
       let userDetails;
-      const driverUserDetials = await Driver.findById(id);
+      const driverUserDetails = await Driver.findById(id);
 
-      if (driverUserDetials) {
-        userDetails = driverUserDetials;
+      if (driverUserDetails) {
+        userDetails = driverUserDetails;
       }
       const dentalUserDetails = await User.findById(id);
 

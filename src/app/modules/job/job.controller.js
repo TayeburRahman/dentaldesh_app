@@ -25,7 +25,7 @@ const getAllJobs = catchAsync(async (req, res) => {
 });
 
 // update the job status
-const updateJobSatus = catchAsync(async (req, res) => {
+const updateJobStatus = catchAsync(async (req, res) => {
   const jobId = req?.params?.jobId;
   console.log(req.body);
   const result = await jobService.updateJobStatusIntoDB(
@@ -41,10 +41,35 @@ const updateJobSatus = catchAsync(async (req, res) => {
   });
 });
 
-const jobControler = {
+// start trip
+const startTrip = catchAsync(async (req, res) => {
+  const jobId = req?.params?.jobId;
+  const destination = req?.body?.destination;
+  const result = await jobService.startTrip(jobId, destination);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Trip start successfully",
+    data: result,
+  });
+});
+
+const completeDestination = catchAsync(async (req, res) => {
+  const jobId = req?.params?.jobId;
+  const result = await jobService.completedDestination(jobId);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Destination completed  successfully",
+    data: result,
+  });
+});
+
+const jobController = {
   createJob,
   getAllJobs,
-  updateJobSatus,
+  updateJobStatus,
+  startTrip,
 };
 
-module.exports = { jobControler };
+module.exports = { jobController };
