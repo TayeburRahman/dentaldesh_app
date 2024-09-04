@@ -3,8 +3,7 @@ const catchAsync = require('../../../shared/catchasync');
 const config = require('../../../config');
 const {DriverService}= require('./driver.service');
 
-const registerDriver = catchAsync(async (req, res) => {
-  console.log("update --------------" );
+const registerDriver = catchAsync(async (req, res) => { 
   await DriverService.registerDriver(req);
 
   sendResponse(res, {
@@ -33,6 +32,7 @@ const activateDriver = catchAsync(async (req, res) => {
 });
 
 const getAllDriver = catchAsync(async (req, res) => {
+  console.log(req.query);
   const result = await DriverService.getAllDriver(req.query);
   sendResponse(res, {
     statusCode: 200,

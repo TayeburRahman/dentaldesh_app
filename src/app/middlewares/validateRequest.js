@@ -1,4 +1,4 @@
-const { z } = require('zod'); // Assuming Zod is imported from 'zod'
+const { z } = require("zod");
 
 const validateRequest = (schema) => async (req, res, next) => {
   try {

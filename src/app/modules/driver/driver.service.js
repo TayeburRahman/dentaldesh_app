@@ -5,7 +5,7 @@ const { jwtHelpers } = require("../../../helpers/jwtHelpers");
 const config = require("../../../config");
 const Driver = require("./driver.model");
 const httpStatus = require("http-status");
-const sendEmail = require("../../../utils/sendEmail");
+const { sendEmail } = require("../../../utils/sendEmail");
 const {
   registrationSuccessEmailBody,
 } = require("../../../mails/email.register");
@@ -170,20 +170,23 @@ cron.schedule("* * * * *", async () => {
 
 //!
 const getAllDriver = async (query) => {
+  console.log(query);
   const driverQuery = await Driver.find();
-  // const driverQuery = new  Driver.find()
-  // .search(['name'])
+  // .search(["name"])
   // .filter()
   // .sort()
   // .paginate()
   // .fields();
 
   // const result = await driverQuery.modelQuery;
+  const result = driverQuery;
+  console.log(result);
   // const meta = await driverQuery.countTotal();
 
   return {
     // meta,
-    data: driverQuery,
+    data: result,
+    // data: driverQuery,
   };
 };
 
