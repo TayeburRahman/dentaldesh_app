@@ -46,6 +46,17 @@ const socket = (io) => {
       } else {
         console.log("User not found");
       }
+      //get previous message----------------------------------------
+      const getConversationMessage = await Conversation.findOne({
+        $or: [
+          { sender: currentUserId, receiver: id },
+          { sender: id, receiver: currentUserId },
+        ],
+      }).sort({ updatedAt: -1 });
+
+      console.log("previous conversation message", getConversationMessage);
+
+      socket.emit("message", getConversationMessage?.messages || []);
     });
 
     // new message----------------------------------------------
