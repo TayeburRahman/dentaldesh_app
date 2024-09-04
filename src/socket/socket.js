@@ -16,12 +16,12 @@ const socket = (io) => {
     // create room -----------
     socket.join(currentUserId);
 
-    // set online user
+    // set online user---------------------------
     onlineUser.add(currentUserId);
-    // send to the client
+    // send to the client-----------------
     io.emit("onlineUser", Array.from(onlineUser));
 
-    // message page
+    // message page-------------------------------------------------------
     socket.on("message-page", async (id) => {
       console.log("received userid for message page", id);
       let userDetails;
@@ -48,7 +48,7 @@ const socket = (io) => {
       }
     });
 
-    // new message
+    // new message----------------------------------------------
     socket.on("new-message", async (data) => {
       // console.log(data);
       let conversation = await Conversation.findOne({
@@ -58,7 +58,7 @@ const socket = (io) => {
         ],
       });
       // console.log("new conversatin", conversation);
-      // if conversation is not available then create a new conversation
+      // if conversation is not available then create a new conversation---------------
       if (!conversation) {
         conversation = await Conversation.create({
           sender: data?.sender,
@@ -69,6 +69,7 @@ const socket = (io) => {
         msgByUserId: data?.msgByUserId,
         text: data?.text,
       };
+      // update the conversaton---------------------------
       const updateConversation = await Conversation.updateOne(
         {
           _id: conversation?._id,
@@ -77,7 +78,16 @@ const socket = (io) => {
           $push: { messages: messageData },
         }
       );
-      console.log("updated conversation", updateConversation);
+      // console.log("updated conversation", updateConversation);
+
+      // get conversaton message -----------------------------------------
+      const getConversationMessage = await Conversation.findOne({
+        $or: [
+          { sender: data?.sender, receiver: data?.receiver },
+          { sender: data?.receiver, receiver: data?.sender },
+        ],
+      });
+      console.log("conversation message", getConversationMessage);
     });
 
     // Disconnect user
