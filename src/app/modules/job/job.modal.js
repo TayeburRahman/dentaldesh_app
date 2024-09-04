@@ -1,5 +1,5 @@
-const { default: mongoose } = require("mongoose");
-const { Schema } = require("zod");
+const { default: mongoose, Types } = require("mongoose");
+const { Schema, boolean } = require("zod");
 
 const destinationSchema = {
   latitude: {
@@ -44,6 +44,11 @@ const packageDetailsSchema = new Schema({
   },
 });
 const jobSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
   picupDestination: {
     type: destinationSchema,
     required: true,
@@ -57,6 +62,15 @@ const jobSchema = new Schema({
   packageDetails: {
     type: packageDetailsSchema,
     required: true,
+  },
+  status: {
+    type: String,
+    default: "pending",
+    enum: ["pending", "accepted", "confirmed", "completed", "canceled"],
+  },
+  driver: {
+    type: Schema.Types.ObjectId,
+    default: null,
   },
 });
 
