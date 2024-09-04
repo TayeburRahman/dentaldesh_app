@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const createToken = (payload, secret, expireTime) => {
-  console.log("--", createToken)
+  console.log("--", createToken);
   return jwt.sign(payload, secret, {
     expiresIn: expireTime,
   });
@@ -9,7 +9,7 @@ const createToken = (payload, secret, expireTime) => {
 
 const createResetToken = (payload, secret, expireTime) => {
   return jwt.sign(payload, secret, {
-    algorithm: 'HS256',
+    algorithm: "HS256",
     expiresIn: expireTime,
   });
 };
@@ -22,8 +22,8 @@ const jwtHelpers = {
   createToken,
   verifyToken,
   createResetToken,
-}
+};
 
 module.exports = {
-  jwtHelpers
+  jwtHelpers,
 };

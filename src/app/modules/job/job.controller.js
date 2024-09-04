@@ -3,8 +3,7 @@ const sendResponse = require("../../../shared/sendResponse");
 const { jobService } = require("./job.service");
 
 const createJob = catchAsync(async (req, res) => {
-  console.log("curretn user", req.user);
-  const result = await jobService.createJobIntoDB(req?.body);
+  const result = await jobService.createJobIntoDB(req?.user?.userId, req?.body);
 
   sendResponse(res, {
     statusCode: 200,

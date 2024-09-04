@@ -1,5 +1,9 @@
-const createJobIntoDB = async (payload) => {
-  console.log(payload);
+const Job = require("./job.modal");
+
+const createJobIntoDB = async (userId, payload) => {
+  payload.user = userId;
+  const result = await Job.create(payload);
+  return result;
 };
 
 const jobService = {

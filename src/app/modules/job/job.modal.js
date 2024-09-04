@@ -1,5 +1,4 @@
-const { default: mongoose, Types } = require("mongoose");
-const { Schema, boolean } = require("zod");
+const { default: mongoose, Types, Schema } = require("mongoose");
 
 const destinationSchema = {
   latitude: {
@@ -21,7 +20,7 @@ const dropOffDestinationSchema = new Schema({
     required: true,
   },
   phoneNumber: {
-    type: string,
+    type: String,
     required: true,
   },
   additionalDetails: {
@@ -39,7 +38,7 @@ const packageDetailsSchema = new Schema({
     required: true,
   },
   weight: {
-    type: number,
+    type: Number,
     required: true,
   },
 });

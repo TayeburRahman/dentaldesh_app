@@ -4,6 +4,6 @@ const auth = require("../../middlewares/auth");
 const { ENUM_USER_ROLE } = require("../../../utils/enums");
 const router = express.Router();
 
-router.post("/create-job", jobControler.createJob);
+router.post("/create-job", auth(ENUM_USER_ROLE.USER), jobControler.createJob);
 
 module.exports = router;
