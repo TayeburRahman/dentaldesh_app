@@ -38,6 +38,18 @@ const dropOffDestinationSchema = new Schema({
     type: String,
     required: true,
   },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
+  startTime: {
+    type: Date,
+    default: null,
+  },
+  endTime: {
+    type: Date,
+    default: null,
+  },
 });
 const packageDetailsSchema = new Schema({
   packageName: {
@@ -76,7 +88,7 @@ const jobSchema = new Schema({
   status: {
     type: String,
     default: "pending",
-    enum: ["pending", "accepted", "confirmed", "completed", "canceled"],
+    enum: ["pending", "accepted", "confirmed", "end", "canceled"],
   },
   potentialDrivers: [
     {
