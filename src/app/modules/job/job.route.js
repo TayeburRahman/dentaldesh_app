@@ -11,7 +11,11 @@ router.patch(
   auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.DRIVER),
   jobController.updateJobStatus
 );
-router.patch("/confirm-job/:jobId", jobController.confirmJobByUser);
+router.patch(
+  "/confirm-job/:jobId",
+  auth(ENUM_USER_ROLE.USER),
+  jobController.confirmJobByUser
+);
 router.post("/start-trip/:jobId", jobController.startTrip);
 router.post("/complete-destination/:jobId");
 module.exports = router;

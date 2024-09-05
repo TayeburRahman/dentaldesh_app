@@ -36,6 +36,13 @@ const updateJobStatusIntoDB = async (user, jobId, status) => {
 };
 
 const confirmJobByUser = async (jobId, doctorId) => {
+  const job = await Job.findById(jobId);
+  if (job?.status !== "accepted") {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "You can not confirm the job before driver accept the job"
+    );
+  }
   const result = await Job.updateOne(
     { _id: jobId },
     { status: "confirmed", confirmedDriver: doctorId }
