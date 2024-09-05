@@ -67,6 +67,7 @@ const updateJobStatusIntoDB = async (user, jobId, status) => {
   return result;
 };
 
+//
 const confirmJobByUser = async (jobId, doctorId) => {
   const job = await Job.findById(jobId);
   if (job?.status !== "accepted") {
@@ -82,6 +83,7 @@ const confirmJobByUser = async (jobId, doctorId) => {
   return result;
 };
 
+// start trip service --------------------------------------------------------------
 const startTrip = async (jobId, destinationIndex) => {
   const job = await Job.findById(jobId);
 
@@ -106,7 +108,7 @@ const startTrip = async (jobId, destinationIndex) => {
   res.send({ message: "Trip started for destination", job });
 };
 
-// complete destination
+// complete destination-------------------------------------------------------------------
 const completedDestination = async (jobId) => {
   const job = await Job.findById(jobId);
 
@@ -137,7 +139,7 @@ const completedDestination = async (jobId) => {
 
   res.send({ message: "Destination marked as completed", job });
 };
-
+// some changes
 const jobService = {
   createJobIntoDB,
   updateJobStatusIntoDB,
