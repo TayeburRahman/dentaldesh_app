@@ -13,10 +13,14 @@ const getAllJobFromDB = async () => {
   return result;
 };
 
-// update job
+// update job---------------------------------
 const updateJobStatusIntoDB = async (user, jobId, status) => {
-  console.log("user", user);
+  const job = await Job.findById(jobId);
+  if (!job) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Job not found");
+  }
   let result;
+  // when try to accept the job ------------------------------------
   if (status === "accepted") {
     if (user?.role !== "DRIVER") {
       throw new ApiError(
@@ -31,6 +35,34 @@ const updateJobStatusIntoDB = async (user, jobId, status) => {
         $push: { potentialDrivers: { driverId: user?.userId } },
       }
     );
+  }
+  // when try to cancel the job --------------------------------------
+  if (status === "canceled") {
+    console.log("if condition in cancel");
+    if (
+      job?.status === "in-progress" ||
+      job?.status === "completed" ||
+      job?.status === "confirmed"
+    ) {
+      throw new ApiError(
+        httpStatus.BAD_REQUEST,
+        "You cannot cancel the job when the job is confirmed, in-progress, or completed."
+      );
+    }
+    if (user?.role === "USER") {
+      result = await job.updateOne({ _id: jobId }, { status: "canceled" });
+    }
+    if (user?.role === "DRIVER") {
+      result = await Job.updateOne(
+        { _id: jobId },
+        { $pull: { potentialDrivers: { driverId: user?.userId } } },
+        { runValidators: true }
+      );
+    }
+    const updatedJob = await Job.findById(jobId);
+    if (updatedJob?.potentialDrivers?.length === 0) {
+      await Job.updateOne({ _id: jobId }, { status: "pending" });
+    }
   }
   return result;
 };
